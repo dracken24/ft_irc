@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dracken24 <dracken24@student.42.fr>        +#+  +:+       +#+        */
+/*   By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 13:20:43 by dracken24         #+#    #+#             */
-/*   Updated: 2023/02/22 16:21:35 by dracken24        ###   ########.fr       */
+/*   Updated: 2023/02/23 15:17:38 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// telnet :> open 127.0.0.1 8000
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -20,8 +22,8 @@
 #include <iostream>
 #include <stdexcept>
 
-
-int main(void)
+	int
+	main(void)
 {
 
 	int server_sockfd;							// server socket fd	

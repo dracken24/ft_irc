@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dracken24 <dracken24@student.42.fr>        +#+  +:+       +#+         #
+#    By: nadesjar <dracken24@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:22:35 by nadesjar          #+#    #+#              #
-#    Updated: 2023/02/22 16:22:02 by dracken24        ###   ########.fr        #
+#    Updated: 2023/02/23 15:05:02 by nadesjar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS_C			= $(patsubst $(P_SRCS_C)%.cpp, $(P_OBJS_C)%.o, $(FILES_C))
 
 CC				= c++
 
-CFLAGS			= -Wall -Werror -Wextra -std=c++98
+CFLAGS			= -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable -std=c++98
 
 NAME_S			= server
 NAME_C			= client
