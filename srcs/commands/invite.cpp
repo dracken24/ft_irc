@@ -6,13 +6,13 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:43:10 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/10 12:19:26 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:39:48 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/IrcCore.hpp"
 
-//*********************************** INVITE ***********************************//
+//*********************************** INVITE ***********************************// Should Work Properly
 
 void	InviteUser(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 {
