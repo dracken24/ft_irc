@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:21:34 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/09 13:44:21 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:16:47 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,11 @@ void	IrcCore::SetAdminRights(int32 clientNbr, int32 admin)
 {
 	_ircInfo.clients.at(clientNbr)->isAdmin = admin;
 }
+
+//void	IrcCore::SetOperatorRights(int32 clientNbr, int32 admin)
+//{
+//	_ircInfo.clients.at(clientNbr)->isAdmin = admin;
+//}
 
 //**********************************************************************//
 //**                     		GETTERS    	     		              **//

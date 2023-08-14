@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:12:35 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/09 13:46:32 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:57:30 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ class IrcCore
 					int32 clientNbr, bl8 access);
 		void	SetClientFd(int32 client, int32 fd);
 		void	SetAdminRights(int32 clientNbr, int32 admin);
+	//	void	SetOperatorRights(int32 clientNbr, int32 admin)
 
 	//**********************************************************************//
 	//**                     		GETTERS    	     		              **//
@@ -206,6 +207,10 @@ void		QuitServer(IrcCore *irc, Logger *log, IrcMemory *ircMemory, ircClient *cli
 
 // LINK: admin.cpp
 void		CheckAdminPassword(IrcCore *irc, Logger *log, int32 i, Splinter *splitCMD);
+void		MakeOperator(IrcCore *irc, Logger *log, int32 i, Splinter *splitCMD);
+void		PromoteToCustomer(IrcCore *irc, Logger *log, int32 i, Splinter *splitCMD);
 // LINK: mode.cpp
 void 		Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter *splitCMD, int32 i);
+// LINK: topic.cpp
+void		topicCMD(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD);
 #endif

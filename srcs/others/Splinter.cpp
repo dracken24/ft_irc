@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:27:48 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/09 14:52:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:16:33 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,13 @@ std::cout << "_words Nb -> " << _words.size() << std::endl;
 		_channelName = _words.at(1);
 
 		RemoveSenderInClients(_sender, &_targetClients);
+	}
+	else if (_words[0] == TOPIC)
+	{
+		_logger.ERROR("Commande TOPIC: %s", _words[0].c_str());
+		_cmd = TOPIC;
+		_isPrivate = false;
+		_isChannel = false;
 	}
 	else if (_words[0] == MODE)
 	{

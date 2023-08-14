@@ -6,12 +6,36 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:43:23 by smayrand          #+#    #+#             */
-/*   Updated: 2023/07/26 14:37:56 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:03:41 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/IrcCore.hpp"
+#include <string>
 
 //*********************************** TOPIC ***********************************//
-
-SendReply("332 " + client->nickName + " #" + channel + " :Welcome to the general discussion channel!", log, client->fd->fd, 1);
+//TODO: DOIT VERIFIER SI L'USER EST DANS UN CHANNEL
+void	topicCMD(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
+{
+	
+	if(splitCMD->GetWords().size() == 1)
+		return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Change the topic using this format :: /TOPIC <New Topic>",
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
+	std::string channelName = splitCMD->GetWords().at(1);
+	if(channelName.at(0) == '#')
+		channelName.erase(channelName.begin());
+	if(splitCMD->GetWords().size() == 2)
+		return(irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "FuckIRCsrx <" + channelName + "> Topic: " + irc->_channels.GetChannelTopic(channelName), 
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
+	else
+	{
+		std::string newTopic = splitCMD->GetWords().at(2);
+		for(unsigned long i = 3; i < splitCMD->GetWords().size(); i++)
+			newTopic = newTopic + " " + splitCMD->GetWords().at(i);
+		if(newTopic.at(0) == ':')
+			newTopic.erase(newTopic.begin()); 
+		irc->_channels.SetTopic(channelName, newTopic);
+		return(irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "FuckIRCsrx <" + channelName + "> Topic: " + irc->_channels.GetChannelTopic(channelName), 
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
+	}
+}
