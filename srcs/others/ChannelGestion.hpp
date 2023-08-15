@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/03 15:08:21 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:18:09 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ class ChannelGestion
 		bl8			RemoveClientToChannel(Logger *log, ircClient *client,
 						std::string channel);
 		void		SetChannel(std::string channel);
+		void		SetTopic(std::string name, std::string topic);
 
 	//**********************************************************************//
 	//**                     		GETTERS    	     		              **//
 	//**********************************************************************//
 
 		std::string	GetChannel(std::string channel) const;
+		std::string	GetChannelTopic(std::string name) const;
 		std::string GetChannelDescription(std::string name) const;
 		int32		GetMemebersInChannel(std::string name) const;
 		channel_t	GetSpecificChannel(std::string name) const;

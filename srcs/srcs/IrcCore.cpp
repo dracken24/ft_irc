@@ -6,7 +6,7 @@
 /*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:21:34 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/11 13:29:32 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:16:47 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,11 @@ bool	IrcCore::SetPivateChannel(IrcCore *irc, ircClient *sender, Logger *log, std
 		
 	return true;
 }
+
+//void	IrcCore::SetOperatorRights(int32 clientNbr, int32 admin)
+//{
+//	_ircInfo.clients.at(clientNbr)->isAdmin = admin;
+//}
 
 //**********************************************************************//
 //**                     		GETTERS    	     		              **//

@@ -6,7 +6,7 @@
 #    By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 13:22:35 by nadesjar          #+#    #+#              #
-#    Updated: 2023/08/09 13:48:13 by smayrand         ###   ########.fr        #
+#    Updated: 2023/08/10 15:27:28 by smayrand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ FILES_C			= $(P_SRCS_C)join.cpp $(P_SRCS_C)privateMessages.cpp  \
 				$(P_SRCS_C)part.cpp $(P_SRCS_C)quitServer.cpp \
 				$(P_SRCS_C)kick.cpp $(P_SRCS_C)invite.cpp \
 				$(P_SRCS_C)mode.cpp $(P_SRCS_C)admin.cpp \
+				$(P_SRCS_C)topic.cpp \
 
 FILES_O			= $(P_SRCS_O)IrcMemory.cpp $(P_SRCS_O)Logger.cpp \
 				$(P_SRCS_O)ChannelGestion.cpp $(P_SRCS_O)Splinter.cpp \
@@ -110,6 +111,10 @@ $(P_OBJS_C)admin.o: $(P_SRCS_C)admin.cpp $(INC_IRC)
 	@printf "$C■"
 
 $(P_OBJS_C)mode.o: $(P_SRCS_C)mode.cpp $(INC_IRC)
+	@$(CC) -I $(CFLAGS) -c $< -o $@
+	@printf "$C■"
+
+$(P_OBJS_C)topic.o: $(P_SRCS_C)topic.cpp $(INC_IRC)
 	@$(CC) -I $(CFLAGS) -c $< -o $@
 	@printf "$C■"
 
