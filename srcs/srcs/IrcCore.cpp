@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcCore.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:21:34 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/09 13:44:21 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:16:47 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,64 @@ void	IrcCore::SetAdminRights(int32 clientNbr, int32 admin)
 	_ircInfo.clients.at(clientNbr)->isAdmin = admin;
 }
 
+void	IrcCore::SetPrivateClient(ircClient *sender, Logger *log, ircClient *client, std::string messageContent)
+{
+	for (s_t i = 0; i < sender->privateMessages.size(); i++)
+	{
+		if (sender->privateMessages.at(i)->nickName == client->nickName)
+		{
+			std::cout << "Client already in a private conversation with you" << std::cout;
+			return;
+		}
+	}
+
+	sender->privateMessages.push_back(client);
+	client->privateMessages.push_back(sender);
+	_channels.SendReply(":" + client->nickName + "!~"+ client->nickName + " JOIN " + sender->nickName, log, client->fd->fd, 0);
+	_channels.SendReply(":" + sender->nickName + "!~"+ sender->nickName + " JOIN " + client->nickName, log, sender->fd->fd, 0);
+
+	// std::string targetMessage = "PRIVMSG " + sender->userName + " :" + sender->userName + " : " + messageContent;
+	// std::string VoidMessage = "PRIVMSG " + client->nickName + " :" + messageContent;
+
+	// _channels.SendReply(targetMessage, log, client->fd->fd, 0);
+	// _channels.SendReply(VoidMessage, log, sender->fd->fd, 0);
+}
+
+bool	IrcCore::SetPivateChannel(IrcCore *irc, ircClient *sender, Logger *log, std::string nickName, Splinter *splitCMD, std::string messageContent)
+{
+	ircClient *client = GetClientP(GetClientNb(nickName));
+	
+	if (!client)
+	{
+		log->WARNING("No client");
+		return false;
+	}
+	else
+	{
+		SetPrivateClient(sender, log, client, messageContent);
+	}
+
+
+	// log->ERROR("private targetfd: %d", client->fd->fd);
+
+	std::string targetMessage = "PRIVMSG " + client->nickName + " :" + messageContent;
+
+	_channels.SendReply(targetMessage, log, client->fd->fd, 0);
+	
+	targetMessage = "PRIVMSG " + sender->nickName + " : " + messageContent;
+	std::string VoidMessage = "PRIVMSG " + client->nickName + " :" + messageContent;
+
+	_channels.SendReply(targetMessage, log, client->fd->fd, 0);
+	_channels.SendReply(VoidMessage, log, sender->fd->fd, 0);
+		
+	return true;
+}
+
+//void	IrcCore::SetOperatorRights(int32 clientNbr, int32 admin)
+//{
+//	_ircInfo.clients.at(clientNbr)->isAdmin = admin;
+//}
+
 //**********************************************************************//
 //**                     		GETTERS    	     		              **//
 //**********************************************************************//
@@ -176,6 +234,11 @@ pollfd	*IrcCore::GetPoolfds(void) const
 ircClient	&IrcCore::GetClient(int32 clientNbr) const
 {
 	return *_ircInfo.clients.at(clientNbr);
+}
+
+ircClient	*IrcCore::GetClientP(int32 clientNbr) const
+{
+	return _ircInfo.clients.at(clientNbr);
 }
 
 bl8			IrcCore::GetAccess(int32 place) const

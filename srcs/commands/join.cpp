@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/07/27 03:27:35 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:02:13 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, ircClient *client)
 {
-	channelName.erase(0, 1);
+	if(channelName.at(0) == '#')
+		channelName.erase(0, 1);
 	// if channel don't existı
 	if (irc->GetChannelExist(channelName) == false)
 	{

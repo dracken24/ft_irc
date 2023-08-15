@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/03 16:00:13 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:58:53 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ void		ChannelGestion::SetChannel(std::string channel)
 	map.first = channel;
 
 	_channelMap.insert(map);
+}
+
+void		ChannelGestion::SetTopic(std::string name, std::string topic)
+{
+	channel_t channel = GetSpecificChannel(name);
+	channel.channelTopic = topic;
+	
+	_channelMap.at(name) = channel;
 }
 
 void		ChannelGestion::SendReply(const std::string& message, Logger *log, int32 clientFd, bl8 flag)
@@ -202,6 +210,19 @@ std::string		ChannelGestion::GetChannelDescription(std::string name) const
 	}
 	
 	return "Description not found";
+}
+std::string		ChannelGestion::GetChannelTopic(std::string name) const
+{
+	std::map<std::string, struct channel_t>::const_iterator it = _channelMap.begin();
+	for (; it != _channelMap.end(); it++)
+	{
+		if (it->first == name)
+		{
+			return it->second.channelTopic;
+		}
+	}
+	
+	return "Error: Topic not found";
 }
 
 int32		ChannelGestion::GetMemebersInChannel(std::string name) const
