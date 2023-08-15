@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structsUtility.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:24:19 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/09 13:43:25 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:14:12 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ typedef struct ircClient
 	std::string		password;
 	std::string		channel;
 	
-
+	std::vector<ircClient *>	privateMessages;
 	std::vector<std::string>	clientChannelIn;
 	pollfd			*fd;
 }	ircClient;
-
 
 typedef struct channel_t
 {
