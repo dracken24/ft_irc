@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:24:19 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/10 15:12:56 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:10:53 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct channel_t
 	std::string channelDescription;
 	std::string channelTopic;
 	std::vector<ircClient *>	users;
+	
+	bl8		_topicFlag;	
 }	channel_t;
 
 #endif

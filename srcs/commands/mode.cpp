@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/14 15:42:17 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:09:33 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
  //"  WORD1 : " << splitCMD->GetWords().at(1) << "  WORD2 : " << splitCMD->GetWords().at(2) <<
 	if(splitCMD->GetWords().size() >= 2)
 	{
+			std::cout << "Mode " ;
 		std::string mode = splitCMD->GetWords().at(2);
 	//Définir/supprimer le canal sur invitation uniquement
 		if(strcmp(mode.c_str(), "-i") == 0)
@@ -30,7 +31,19 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		else if(strcmp(mode.c_str(), "-t") == 0)
 		{
 			std::cout << "-t " << std::endl;
-			
+			if(splitCMD->GetWords().size() == 4)
+			{
+				std::string channelName = splitCMD->GetWords().at(1);
+				if(channelName.at(0) == '#')
+					channelName.erase(channelName.begin());
+				if(splitCMD->GetWords().at(3) == "true" && irc->GetSpecificChannel(channelName)._topicFlag == false)
+					irc->_channels.SetTopicRight(channelName, true);
+				else if(splitCMD->GetWords().at(3) == "false" && irc->GetSpecificChannel(channelName)._topicFlag == true)
+					irc->_channels.SetTopicRight(channelName, false);
+			}
+			else
+				std::cout << "FU " << std::endl;
+				
 		}
 	//Définir/supprimer la clé du canal (mot de passe)
 		else if(strcmp(mode.c_str(), "-k") == 0)
@@ -39,12 +52,11 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 	
 		}
 	//Donner/retirer le privilège de l’opérateur de canal
-	//TODO: BUGFIX : lorsque l'user devient operateur recoit 2 fois les messages dans la console.
 		else if(strcmp(mode.c_str(), "-o") == 0)
 		{
 			std::cout << "-o " << std::endl;
 			if (splitCMD->GetWords().size() != 5)
-				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Change the Operator value using this syntax :: /mode -o <user> true/false",
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Change the Operator value using this syntax :: /mode -o <user> true/false  (You must be in a channel.)",
 					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
 			else
 			{
