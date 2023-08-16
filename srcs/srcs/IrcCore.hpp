@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   IrcCore.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:12:35 by dracken24         #+#    #+#             */
 /*   Updated: 2023/08/14 14:57:30 by smayrand         ###   ########.fr       */
@@ -99,6 +99,9 @@ class IrcCore
 					int32 clientNbr, bl8 access);
 		void	SetClientFd(int32 client, int32 fd);
 		void	SetAdminRights(int32 clientNbr, int32 admin);
+
+		void	SetPrivateClient(ircClient *sender, Logger *log, ircClient *client, std::string messageContent);
+		bool	SetPivateChannel(IrcCore *irc, ircClient *sender, Logger *log, std::string nickName, Splinter *splitCMD, std::string messageContent);
 	//	void	SetOperatorRights(int32 clientNbr, int32 admin)
 
 	//**********************************************************************//
@@ -124,6 +127,7 @@ class IrcCore
 		std::string	GetClientUsername(int32 place) const;
 
 		ircClient	&GetClient(int32 clientNbr) const;
+		ircClient	*GetClientP(int32 clientNbr) const;
 		std::string	GetClientChannelName(int32 clientFd) const;
 		std::string	GetClientUserNameFD(int32 clientFd) const;
 		bl8			GetChannelExist(std::string channel) const;
