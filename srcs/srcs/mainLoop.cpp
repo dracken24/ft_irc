@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainLoop.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:30:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/14 14:19:41 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:13:41 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,7 @@ void	ChooseCommand(IrcCore *irc, Logger *log, IrcMemory *ircMemory,
 				log->DEBUG("Mess: %s Name: %s", messageContent.c_str(), channelName.c_str());
 
 				// send to target client
-				irc->SetPivateChannel(irc, splitCMD.GetSender(), &splitCMD._logger, channelName, &splitCMD, messageContent);
-				// PrivmsgGestion(irc, log, splitCMD.GetSender(), channelName, messageContent, i);
+				PrivmsgGestion(irc, log, splitCMD.GetSender(), channelName, messageContent, i);
 			}
 		}
 	// Quit chat

@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/14 12:58:53 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:09:26 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		ChannelGestion::SetChannel(std::string channel)
 {
 	std::pair<std::string, struct channel_t > map;
 	map.first = channel;
+	map.second._topicFlag = false;
 
 	_channelMap.insert(map);
 }
@@ -52,6 +53,14 @@ void		ChannelGestion::SetTopic(std::string name, std::string topic)
 {
 	channel_t channel = GetSpecificChannel(name);
 	channel.channelTopic = topic;
+	
+	_channelMap.at(name) = channel;
+}
+
+void		ChannelGestion::SetTopicRight(std::string name, bl8 right)
+{
+	channel_t channel = GetSpecificChannel(name);
+	channel._topicFlag = right;
 	
 	_channelMap.at(name) = channel;
 }
@@ -104,35 +113,6 @@ bl8			ChannelGestion::AddClientToChannel(IrcCore *irc, Logger *log, ircClient *c
 	if (PmFlag == 1 || channel == find->first )
 	{
 		log->TRACE("Find Channel: %s", channel.c_str());
-
-		// check if client was banned from that channel
-		// if (channel.isUserBanned(user))
-		// {
-		//     sendReply("474 Cannot join channel - you are banned");
-		//     return;
-		// }
-
-		// add client to a channel map<str, client>
-		
-// TODO: TODO: TODO: 
-// TODO: TODO: TODO: 
-//		Désolé si jai foutu la marde dans le dernier code que tu as écris je ne voulais pas overwrite avec le git merge et donc je l'ai collé et commenté ci dessous
-//		ALSO, jai implanté un GETTER GetClientNb() dans le core qui permet de faciliter l'utilisation de GetClient(int32 ClientNbr)	puisqu'il utilise l'index plutot que le FD
-// TODO: TODO: TODO:		
-// TODO: TODO: TODO:		
-	//	// Demander la liste des membres présents dans le canal après avoir ajouté le client
-	//	SendReply(":ircserv 353 " + client->nickName + " = #" + channel + " :",
-	//		log, client->fd->fd, 0);
-//
-	//	for (size_t i = 0; i < irc->_channels._channelMap.at(channel).users.size(); i++)
-	//	{
-	//		ircClient *user = irc->_channels._channelMap.at(channel).users.at(i);
-	//		SendReply(user->nickName + " ", log, client->fd->fd, 0);
-	//	}
-//
-	//	SendReply(":ircserv 366 " + client->nickName + " #" + channel +
-	//		" :End of NAMES list.", log, client->fd->fd, 1);
-
 		client->channel = channel;
 		if(PmFlag == 0)
 		{
