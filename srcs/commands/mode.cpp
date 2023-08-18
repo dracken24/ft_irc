@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/14 15:42:17 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:46:13 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
  //"  WORD1 : " << splitCMD->GetWords().at(1) << "  WORD2 : " << splitCMD->GetWords().at(2) <<
 	if(splitCMD->GetWords().size() >= 2)
 	{
+			std::cout << "Mode " ;
 		std::string mode = splitCMD->GetWords().at(2);
 	//Définir/supprimer le canal sur invitation uniquement
 		if(strcmp(mode.c_str(), "-i") == 0)
@@ -30,7 +31,28 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		else if(strcmp(mode.c_str(), "-t") == 0)
 		{
 			std::cout << "-t " << std::endl;
-			
+			if(splitCMD->GetWords().size() == 4)
+			{
+				std::string channelName = splitCMD->GetWords().at(1);
+				if(channelName.at(0) == '#')
+					channelName.erase(channelName.begin());
+				if(splitCMD->GetWords().at(3) == "true" && irc->GetSpecificChannel(channelName)._topicFlag == false)
+				{
+					irc->_channels.SetTopicRight(channelName, true);
+					irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> Operators can now change the topic of this channel ", 
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+				}	
+				else if(splitCMD->GetWords().at(3) == "false" && irc->GetSpecificChannel(channelName)._topicFlag == true)
+				{
+					irc->_channels.SetTopicRight(channelName, false);
+					irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> Operators cannot change the topic of this channel anymore " , 
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+				}
+			}
+			else
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: syntax error use this syntax: /mode -t <true/false>",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
+				
 		}
 	//Définir/supprimer la clé du canal (mot de passe)
 		else if(strcmp(mode.c_str(), "-k") == 0)
@@ -39,22 +61,29 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 	
 		}
 	//Donner/retirer le privilège de l’opérateur de canal
-	//TODO: BUGFIX : lorsque l'user devient operateur recoit 2 fois les messages dans la console.
 		else if(strcmp(mode.c_str(), "-o") == 0)
 		{
 			std::cout << "-o " << std::endl;
 			if (splitCMD->GetWords().size() != 5)
-				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Change the Operator value using this syntax :: /mode -o <user> true/false",
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Change the Operator value using this syntax :: /mode -o <user> <true/false>  (You must be in a channel.)",
 					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
 			else
 			{
 				i = irc->GetClientNb(splitCMD->GetWords().at(3));
 				if(splitCMD->GetWords().at(4) == "true" && irc->GetIsAdmin(i) == 0)
-					MakeOperator(irc, log, i, splitCMD);	
+				{
+					MakeOperator(irc, log, i, splitCMD);
+					irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + splitCMD->GetWords().at(3) + "> is now an operator ", 
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+				}
 				else if(splitCMD->GetWords().at(4) == "false" && irc->GetIsAdmin(i) == 2)
-					PromoteToCustomer(irc, log, i, splitCMD);	
+				{
+					PromoteToCustomer(irc, log, i, splitCMD);
+					irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + splitCMD->GetWords().at(3) + "> has been promoted to customer ", 
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+				}	
 				else if (splitCMD->GetWords().at(4) == "true" && irc->GetIsAdmin(i) == 2)
-					return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: User is already an operator or syntax error",
+					return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: User is already an operator",
 						&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
 				else
 					return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: User is not an operator or syntax error",
@@ -65,6 +94,25 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		else if(strcmp(mode.c_str(), "-l") == 0)
 		{
 			std::cout << "-l " << std::endl;
+			if(splitCMD->GetWords().size() == 4)
+			{
+				std::string channelName = splitCMD->GetWords().at(1);
+				if (IsDigit(splitCMD->GetWords().at(3)) == 0)
+				{
+					uint16 nb = stoi(splitCMD->GetWords().at(3));
+					if(channelName.at(0) == '#')
+						channelName.erase(channelName.begin());
+					irc->_channels.SetMaxUser(channelName, nb);
+					irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> Max user number has been set to: " + splitCMD->GetWords().at(3), 
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+				}
+				else
+					return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Syntax Error last argument is not a number use this syntax: /mode -l <MaxUsersNb>",
+						&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
+			}
+			else
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Syntax Error use this syntax: /mode -l <MaxUsersNb>",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
 			
 		}
 		else

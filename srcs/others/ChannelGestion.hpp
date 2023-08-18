@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/10 16:18:09 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:21:58 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ class ChannelGestion
 						std::string channel);
 		void		SetChannel(std::string channel);
 		void		SetTopic(std::string name, std::string topic);
+		void		SetTopicRight(std::string name, bl8 right);
+		void		SetMaxUser(std::string name, uint16 UsersMax);
 
 	//**********************************************************************//
 	//**                     		GETTERS    	     		              **//
@@ -95,6 +97,7 @@ class ChannelGestion
 	//**********************************************************************//
 	private :
 		std::map<std::string, struct channel_t > _channelMap;
+
 };
 
 #endif

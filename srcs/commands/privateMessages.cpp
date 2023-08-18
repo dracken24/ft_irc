@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:26:11 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/09 15:31:23 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:15:35 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void    PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 		{
 			return;
 		}
-		for (s_t i = 0; i < channel.users.size(); i++)
+		for (s_t j = 0; j < channel.users.size(); j++)
 		{
-			if (channel.users.at(i) == senderClient || irc->_channels.AllreadyInThatChannel(channelName, senderClient->fd->fd) == false)
+			if (channel.users.at(j) == senderClient || irc->_channels.AllreadyInThatChannel(channelName, senderClient->fd->fd) == false)
 			{
 				continue;
 			}
 			irc->_channels.SendReply(":" + senderClient->nickName + "!~" + senderClient->nickName 
-				+ "@Localhost PRIVMSG #" + channelName + " " + message, log, channel.users.at(i)->fd->fd, 0);
+				+ "@Localhost PRIVMSG #" + channelName + " " + message, log, channel.users.at(j)->fd->fd, 0);
 		}
 	}
 	// send to a specific user
@@ -48,7 +48,7 @@ void    PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 //debug:
 std::cout << "target fd : " << targetfd << " :: " << irc->GetClient(irc->GetClientNb(channelName)).userName << " ::  Sender : " << senderClient->userName << std::endl;
 		irc->_channels.SendReply(targetMessage, log, targetfd, 0);
-		irc->_channels.SendReply(VoidMessage, log, senderClient->fd->fd, 0);
+//		irc->_channels.SendReply(VoidMessage, log, senderClient->fd->fd, 0);
 //		irc->_channels.SendPrivateReply(targetMessage, log, targetfd, senderClient->userName);
 //		irc->_channels.AddClientToChannel(irc, log, &irc->GetClient(irc->GetClientNb(channelName)), senderClient->userName , false, 1);
 	}
