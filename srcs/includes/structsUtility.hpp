@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structsUtility.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:24:19 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/16 15:10:53 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:19:21 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct ircClient
 
 typedef struct channel_t
 {
-	uint16 nbrMembers;
+	uint16	nbrMembers;
+	uint16	maxUsers;	
 	std::string	channelName;
 	std::string channelDescription;
 	std::string channelTopic;

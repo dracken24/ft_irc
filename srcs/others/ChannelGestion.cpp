@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/16 16:09:26 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:31:37 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		ChannelGestion::SetChannel(std::string channel)
 	std::pair<std::string, struct channel_t > map;
 	map.first = channel;
 	map.second._topicFlag = false;
+	map.second.maxUsers = 10;
 
 	_channelMap.insert(map);
 }
@@ -61,6 +62,14 @@ void		ChannelGestion::SetTopicRight(std::string name, bl8 right)
 {
 	channel_t channel = GetSpecificChannel(name);
 	channel._topicFlag = right;
+	
+	_channelMap.at(name) = channel;
+}
+
+void		ChannelGestion::SetMaxUser(std::string name, uint16 UsersMax)
+{
+	channel_t channel = GetSpecificChannel(name);
+	channel.maxUsers = UsersMax;
 	
 	_channelMap.at(name) = channel;
 }
