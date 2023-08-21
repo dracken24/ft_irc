@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/16 16:31:37 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:07:45 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ void	ChannelGestion::ReadConfig(ChannelGestion &config, const std::string &filen
 				map.second.nbrMembers = 0;
 				map.second.channelName = paramValue;
 				map.second.channelDescription = info;
+				map.second.maxUsers = 10;
 				// std::cout << paramValue << std::endl;
 
 				_channelMap.insert(map);

@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/10 16:02:13 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:33:11 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, irc
 	}
 	else // Add client to channel
 	{
-		if (irc->_channels.AddClientToChannel(irc, log, client, channelName, false, 0) == true)
+std::cout << "Logged: " << irc->_channels.GetSpecificChannel(channelName).nbrMembers << "  Max: " << irc->GetSpecificChannel(channelName).maxUsers << std::endl;
+		if (irc->_channels.GetSpecificChannel(channelName).nbrMembers >= irc->GetSpecificChannel(channelName).maxUsers)
+			return(irc->_channels.SendReply("403 , channel #" + channelName + " is full", log, client->fd->fd, 1));
+		else if (irc->_channels.AddClientToChannel(irc, log, client, channelName, false, 0) == true)
 		{
 			std::cout << "add client to channel" << std::endl;
 			return;
