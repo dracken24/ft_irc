@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/16 16:46:13 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:48:05 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 			if(splitCMD->GetWords().size() == 4)
 			{
 				std::string channelName = splitCMD->GetWords().at(1);
-				if (IsDigit(splitCMD->GetWords().at(3)) == 0)
+				if (IsDigit(splitCMD->GetWords().at(3)) != 0)
 				{
 					uint16 nb = stoi(splitCMD->GetWords().at(3));
 					if(channelName.at(0) == '#')
