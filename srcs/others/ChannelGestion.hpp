@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/16 16:21:58 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:21:24 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ class ChannelGestion
 		void		SetTopic(std::string name, std::string topic);
 		void		SetTopicRight(std::string name, bl8 right);
 		void		SetMaxUser(std::string name, uint16 UsersMax);
+		void		SetNewChannel(std::string channelName, std::string topic, std::string password);
 
 	//**********************************************************************//
 	//**                     		GETTERS    	     		              **//
@@ -78,6 +79,8 @@ class ChannelGestion
 		std::string GetChannelDescription(std::string name) const;
 		int32		GetMemebersInChannel(std::string name) const;
 		channel_t	GetSpecificChannel(std::string name) const;
+		bl8			GetChannelRight(std::string channelName);
+		std::string GethannelPassword(std::string channelName);
 		
 		std::map<std::string, struct channel_t >	GetAllChannelsInfos(void) const;
 		std::vector<std::string> GetAllChannelsNames(void) const;
