@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/21 13:07:45 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:52:59 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,11 +194,11 @@ std::string		ChannelGestion::GetChannelDescription(std::string name) const
 	{
 		if (it->first == name)
 		{
-			return it->second.channelDescription;
+			return it->second.channelTopic;
 		}
 	}
 	
-	return "Description not found";
+	return "Topic not found";
 }
 std::string		ChannelGestion::GetChannelTopic(std::string name) const
 {
@@ -279,6 +279,32 @@ bl8		ChannelGestion::AllreadyInThatChannel(std::string channel, int32 clientFd)
 	return false;
 }
 
+bl8			ChannelGestion::GetChannelRight(std::string channelName)
+{
+	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
+	for (; it != _channelMap.end(); it++)
+	{
+		if (it->first == channelName)
+		{
+			return it->second.didHavePassword;
+		}
+	}
+	return false;
+}
+
+std::string ChannelGestion::GethannelPassword(std::string channelName)
+{
+	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
+	for (; it != _channelMap.end(); it++)
+	{
+		if (it->first == channelName)
+		{
+			return it->second.password;
+		}
+	}
+	return "No password found";
+}
+
 //**********************************************************************//
 //**                          PUBLIC METHODS                          **//
 //**********************************************************************//
@@ -340,8 +366,9 @@ void	ChannelGestion::ReadConfig(ChannelGestion &config, const std::string &filen
 				map.first = paramValue;
 				map.second.nbrMembers = 0;
 				map.second.channelName = paramValue;
-				map.second.channelDescription = info;
+				map.second.channelTopic = info;
 				map.second.maxUsers = 10;
+				map.second.didHavePassword = false;
 				// std::cout << paramValue << std::endl;
 
 				_channelMap.insert(map);
@@ -354,4 +381,41 @@ void	ChannelGestion::ReadConfig(ChannelGestion &config, const std::string &filen
 		std::cout << "Channels name: " << it->first << std::endl;
 
 	pclose(file);
+}
+
+void		ChannelGestion::SetNewChannel(std::string channelName, std::string topic, std::string password)
+{
+	std::cout << "IN SetNewChannel" << std::endl;
+	if (channelName.at(0) == '#')
+	{
+		channelName.erase(0, 1);
+	}
+
+	std::string channelExist = GetChannel(channelName);
+	if (channelExist != "Channel not found")
+	{
+		std::cout << "-- Channel Exist --\n";
+		return;
+	}
+
+	// std::cout << "param: " << paramValue << std::endl;
+
+	std::pair<std::string, struct channel_t> map;
+	map.first = channelName;
+	map.second.nbrMembers = 0;
+	map.second.channelName = channelName;
+	map.second.channelTopic = topic;
+	map.second.maxUsers = 10;
+	if (password.size() == 0)
+	{
+		map.second.didHavePassword = true;
+		map.second.password = password;
+	}
+	else
+	{
+		map.second.didHavePassword = false;
+	}
+	std::cout << "channelName: " << channelName << " password: " << password << "topic: " << topic << std::endl;
+
+	_channelMap.insert(map);
 }

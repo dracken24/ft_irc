@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/16 16:46:13 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:16:54 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 	if(splitCMD->GetWords().size() >= 2)
 	{
 			std::cout << "Mode " ;
-		std::string mode = splitCMD->GetWords().at(2);
+		std::string mode;
+		if (splitCMD->GetWords().size() > 2)
+			mode = splitCMD->GetWords().at(2);
 	//Définir/supprimer le canal sur invitation uniquement
 		if(strcmp(mode.c_str(), "-i") == 0)
 		{
 			std::cout << "-i " << std::endl;
 			
+			irc->_channels.SetNewChannel("Test", "Ceci est un test", "lol");
 		}
 	//Définir/supprimer les restrictions de la commande TOPIC pour les opérateurs de canaux
 		else if(strcmp(mode.c_str(), "-t") == 0)
