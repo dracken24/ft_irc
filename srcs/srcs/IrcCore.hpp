@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcCore.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:12:35 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/14 14:57:30 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ class IrcCore
 		std::string	GetClientChannelName(int32 clientFd) const;
 		std::string	GetClientUserNameFD(int32 clientFd) const;
 		bl8			GetChannelExist(std::string channel) const;
-		int32		GetMemebersInChannel(std::string name) const;
+		int32		GetMembersInChannel(std::string name) const;
 		channel_t	GetSpecificChannel(std::string name) const;
 		std::string	GetNickname(int32 place) const;
 
@@ -184,7 +184,7 @@ void    	PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 // LINK: Utils.cpp
 void		Ftoa(float nbr, char *destination, int afterpoint);
 std::string	Itoa(int value);
-std::string Gethannel(std::string channel);
+std::string GetChannel(std::string channel);
 bool		IsDigit(std::string str);
 int			IsAscii(std::string str);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dracken24 <dracken24@student.42.fr>        +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 12:08:06 by dracken24         #+#    #+#             */
-/*   Updated: 2023/05/10 08:08:42 by dracken24        ###   ########.fr       */
+/*   Updated: 2023/08/23 13:16:18 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		IsAscii(std::string str)
 
 // ************************************************************************** //
 
-std::string	Gethannel(std::string channel)
+std::string	GetChannel(std::string channel)
 {
 	char tmp[MAX_MSG_LEN];
 	channel.copy(tmp, channel.length(), 9);

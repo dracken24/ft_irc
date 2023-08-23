@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/21 14:29:31 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, irc
 	}
 	else if (irc->_channels.GetChannelRight(channelName) == true)
 	{
-		// if (irc->_channels.GethannelPassword(channelName) != client.)
+		// if (irc->_channels.GetChannelPassword(channelName) != client.)
 		// {
 			
 		// }
@@ -123,12 +123,12 @@ void	ListChannels(IrcCore *irc, Logger *log, Splinter *splitCMD)
 			for (size_t k = 0; k < tmpChannels.size(); k++)
 			{
 				std::string ret; 
-				ret = Itoa(irc->_channels.GetMemebersInChannel(tmpChannels.at(k)));
+				ret = Itoa(irc->_channels.GetMembersInChannel(tmpChannels.at(k)));
 
 				// send all channel to client one by one
 				irc->_channels.SendReply("322 "+ splitCMD->GetSender()->nickName +
 					" #" + tmpChannels.at(k) + " " + ret + " :" +
-						irc->_channels.GetChannelDescription(tmpChannels.at(k)), log, splitCMD->GetSender()->fd->fd, 1);
+						irc->_channels.GetChannelTopic(tmpChannels.at(k)), log, splitCMD->GetSender()->fd->fd, 1);
 			}
 			// tell client he receve all avaliable #channels
 			irc->_channels.SendReply("323 " + splitCMD->GetSender()->nickName +
