@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/21 14:16:54 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:16:19 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/IrcCore.hpp"
+#include <string>
 
 void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter *splitCMD, int32 i)
 {
@@ -27,8 +28,20 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		if(strcmp(mode.c_str(), "-i") == 0)
 		{
 			std::cout << "-i " << std::endl;
-			
-			irc->_channels.SetNewChannel("Test", "Ceci est un test", "lol");
+			if(splitCMD->GetWords().size() == 6 || splitCMD->GetWords().size() == 5)
+			{
+				std::string channelName = splitCMD->GetWords().at(3);
+				std::string topic = splitCMD->GetWords().at(4);
+				std::string pass = "";
+				if(splitCMD->GetWords().size() == 6)
+					pass = splitCMD->GetWords().at(5);
+//				if(channelName.at(0) != '#')
+//					channelName.insert(0, "#");
+			std::cout << "channelName: " << channelName << std::endl;
+				
+				irc->_channels.SetNewChannel(channelName, topic, pass);
+//				JoinChannel(irc, ircMemory, splitCMD);
+			}
 		}
 	//Définir/supprimer les restrictions de la commande TOPIC pour les opérateurs de canaux
 		else if(strcmp(mode.c_str(), "-t") == 0)
@@ -100,7 +113,7 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 			if(splitCMD->GetWords().size() == 4)
 			{
 				std::string channelName = splitCMD->GetWords().at(1);
-				if (IsDigit(splitCMD->GetWords().at(3)) == 0)
+				if (IsDigit(splitCMD->GetWords().at(3)) != 0)
 				{
 					uint16 nb = stoi(splitCMD->GetWords().at(3));
 					if(channelName.at(0) == '#')

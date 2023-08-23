@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 12:52:59 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,19 +187,6 @@ std::map<std::string, channel_t >	ChannelGestion::GetAllChannelsInfos(void) cons
 	return _channelMap;
 }
 
-std::string		ChannelGestion::GetChannelDescription(std::string name) const
-{
-	std::map<std::string, struct channel_t>::const_iterator it = _channelMap.begin();
-	for (; it != _channelMap.end(); it++)
-	{
-		if (it->first == name)
-		{
-			return it->second.channelTopic;
-		}
-	}
-	
-	return "Topic not found";
-}
 std::string		ChannelGestion::GetChannelTopic(std::string name) const
 {
 	std::map<std::string, struct channel_t>::const_iterator it = _channelMap.begin();
@@ -214,7 +201,7 @@ std::string		ChannelGestion::GetChannelTopic(std::string name) const
 	return "Error: Topic not found";
 }
 
-int32		ChannelGestion::GetMemebersInChannel(std::string name) const
+int32		ChannelGestion::GetMembersInChannel(std::string name) const
 {
 	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
 	for (; it != _channelMap.end(); it++)
@@ -292,7 +279,7 @@ bl8			ChannelGestion::GetChannelRight(std::string channelName)
 	return false;
 }
 
-std::string ChannelGestion::GethannelPassword(std::string channelName)
+std::string ChannelGestion::GetChannelPassword(std::string channelName)
 {
 	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
 	for (; it != _channelMap.end(); it++)

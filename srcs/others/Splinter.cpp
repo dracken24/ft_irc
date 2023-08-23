@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:27:48 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/14 16:13:53 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:13:29 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,12 @@ std::cout << "_words Nb -> " << _words.size() << std::endl;
 	}
 	else if (_words[0] == MODE)
 	{
+		if(_words.size() > 2  && _words[2] == "-i")
+		{
+			_channelName = _words[3];
+			if(_channelName.at(0) != '#')
+				_channelName.insert(0, "#");
+		}
 		_logger.ERROR("Commande MODE: %s", _words[0].c_str());
 		_cmd = MODE;
 		_isPrivate = false;

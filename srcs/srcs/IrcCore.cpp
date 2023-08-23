@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcCore.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:21:34 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/14 14:16:47 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,9 +302,9 @@ bl8			IrcCore::GetSetUser(int32 place) const
 	return _ircInfo.clients.at(place)->setUser;
 }
 
-int32		IrcCore::GetMemebersInChannel(std::string name) const
+int32		IrcCore::GetMembersInChannel(std::string name) const
 {
-	return _channels.GetMemebersInChannel(name);
+	return _channels.GetMembersInChannel(name);
 }
 
 int32		IrcCore::GetClientFd(std::string userName)
