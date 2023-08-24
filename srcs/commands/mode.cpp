@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/23 15:16:19 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:50:26 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 				std::string pass = "";
 				if(splitCMD->GetWords().size() == 6)
 					pass = splitCMD->GetWords().at(5);
-//				if(channelName.at(0) != '#')
-//					channelName.insert(0, "#");
-			std::cout << "channelName: " << channelName << std::endl;
 				
 				irc->_channels.SetNewChannel(channelName, topic, pass);
-//				JoinChannel(irc, ircMemory, splitCMD);
+				JoinChannel(irc, ircMemory, splitCMD);
+				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: Channel :<" + channelName + "> has been created. " , 
+				&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
 			}
+			else
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: syntax error use this syntax: /mode -i <ChannelName> <Topic> <Password(Optional)>",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
 		}
 	//Définir/supprimer les restrictions de la commande TOPIC pour les opérateurs de canaux
 		else if(strcmp(mode.c_str(), "-t") == 0)
@@ -74,7 +76,29 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		else if(strcmp(mode.c_str(), "-k") == 0)
 		{
 			std::cout << "-k " << std::endl;
-	
+			if(splitCMD->GetWords().size() == 4)
+			{
+				std::string channelName = splitCMD->GetWords().at(1);
+				std::string NewPass = splitCMD->GetWords().at(3);
+				if(channelName.at(0) == '#')
+					channelName.erase(channelName.begin());
+				irc->_channels.SetChannelPassword(channelName, NewPass);
+				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> password has been changed to: " + splitCMD->GetWords().at(3), 
+				&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+			}
+			else if(splitCMD->GetWords().size() == 3)
+			{
+				std::string channelName = splitCMD->GetWords().at(1);
+				std::string NewPass = "";
+				if(channelName.at(0) == '#')
+					channelName.erase(channelName.begin());
+				irc->_channels.SetChannelPassword(channelName, NewPass);
+				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> password has been changed to: " + splitCMD->GetWords().at(3), 
+				&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+			}
+			else
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Syntax Error use this syntax: /mode -l <MaxUsersNb>",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));	
 		}
 	//Donner/retirer le privilège de l’opérateur de canal
 		else if(strcmp(mode.c_str(), "-o") == 0)
@@ -134,6 +158,8 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 		else
 		{
 			std::cout << "Error: Unknown function" << std::endl;
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Unknown mode use these options: -i, -t, -k, -o, -l \n -i : create/delete channel\n -t : change right to change the topic of a channel\n -k : change the password of a channel\n -o : change user rights\n -l : change user limit in a channel\n  ",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));		
 			
 		}
 	}

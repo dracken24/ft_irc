@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:29:01 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class ChannelGestion
 		bl8			RemoveClientToChannel(Logger *log, ircClient *client,
 						std::string channel);
 		void		SetChannel(std::string channel);
+		void		SetChannelPassword(std::string channel, std::string pass);
 		void		SetTopic(std::string name, std::string topic);
 		void		SetTopicRight(std::string name, bl8 right);
 		void		SetMaxUser(std::string name, uint16 UsersMax);
