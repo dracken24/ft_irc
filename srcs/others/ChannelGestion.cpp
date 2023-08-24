@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:28:50 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ void		ChannelGestion::SetChannel(std::string channel)
 	map.first = channel;
 	map.second._topicFlag = false;
 	map.second.maxUsers = 10;
+
+	_channelMap.insert(map);
+}
+
+void		ChannelGestion::SetChannelPassword(std::string channel, std::string pass)
+{
+	std::pair<std::string, struct channel_t > map;
+	map.first = channel;
+	map.second.password = pass;
 
 	_channelMap.insert(map);
 }
