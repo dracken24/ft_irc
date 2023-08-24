@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/23 19:50:26 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:17:38 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 				JoinChannel(irc, ircMemory, splitCMD);
 				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: Channel :<" + channelName + "> has been created. " , 
 				&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
+			}
+			else if (splitCMD->GetWords().size() == 4)
+			{
+				std::string Destroy = splitCMD->GetWords().at(3);
+				if(strcmp(Destroy.c_str(), "delete") == 0)
+				{
+					//SUPPRIME
+				}
 			}
 			else
 				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: syntax error use this syntax: /mode -i <ChannelName> <Topic> <Password(Optional)>",
