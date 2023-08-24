@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/23 20:17:38 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/24 01:20:45 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 			std::cout << "Mode " ;
 		std::string mode;
 		if (splitCMD->GetWords().size() > 2)
+		{
 			mode = splitCMD->GetWords().at(2);
+		}
+			
 	//Définir/supprimer le canal sur invitation uniquement
 		if(strcmp(mode.c_str(), "-i") == 0)
 		{
@@ -43,10 +46,20 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 			}
 			else if (splitCMD->GetWords().size() == 4)
 			{
+				// std::cout << "DEBUG 1" << std::endl;
 				std::string Destroy = splitCMD->GetWords().at(3);
 				if(strcmp(Destroy.c_str(), "delete") == 0)
 				{
-					//SUPPRIME
+					// std::cout << "DEBUG 2: " << irc->GetChannelExist(splitCMD->GetWords().at(1)) << " " << splitCMD->GetWords().at(1) << std::endl;
+					if (irc->GetChannelExist(splitCMD->GetWords().at(1)))
+					{
+						// std::cout << "DEBUG 3" << std::endl;
+						if (splitCMD->GetWords().at(1).at(0) == '#')
+						{
+							splitCMD->GetWords().at(1).erase(0, 1);
+						}
+						irc->_channels.DeleteAllClientFromChannel(irc, log, splitCMD->GetSender(), ircMemory, splitCMD->GetWords(), splitCMD->GetWords().at(1));
+					}
 				}
 			}
 			else

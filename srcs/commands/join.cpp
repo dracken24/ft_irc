@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/24 00:16:34 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, irc
 		return;
 	}
 
-	// Check if the client is already in the channel
-	if (irc->_channels.AllreadyInThatChannel(channelName, client->fd->fd) == true)
-	{
-		irc->_channels.SendReply("403 , You are already in channel #" + channelName , log, client->fd->fd, 1);
-		return;
-	}
-	else if (irc->_channels.GetChannelRight(channelName) == true)
+	if (irc->_channels.GetChannelRight(channelName) == true)
 	{
 		// if (irc->_channels.GetChannelPassword(channelName) != client.)
 		// {
 			
 		// }
+	}
+	
+	// Check if the client is already in the channel
+	if (irc->_channels.AllreadyInThatChannel(channelName, client->fd->fd) == true)
+	{
+		irc->_channels.SendReply("403 , You are already in channel #" + channelName , log, client->fd->fd, 1);
+		return;
 	}
 	else // Add client to channel
 	{

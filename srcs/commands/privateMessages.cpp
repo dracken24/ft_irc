@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privateMessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:26:11 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/15 14:15:35 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/24 01:50:53 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void    PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 			std::string channelName, std::string message, int32 i)
 {
 	// send to all channel members
+	std::cout << "Channel name in PrivmsgGestion: " << channelName << std::endl;
+	if (!irc->GetChannelExist(channelName))
+	{
+		return;
+	}
 	if (channelName.find("#") == 0)
 	{
 		channelName.erase(0, 1);

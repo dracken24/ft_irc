@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 17:29:01 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 23:52:18 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ class ChannelGestion
 		
 		void		SendReply(const std::string& message, Logger *log, int32 clientFd, bl8 flag);
 		void		SendPrivateReply(const std::string& message, Logger *log, int32 clientFd, std::string sender);
+
+		void		DeleteAllClientFromChannel(IrcCore *irc, Logger *log, ircClient *sender, IrcMemory *ircMemory, std::vector<std::string> words, std::string channelName);
 
 	//**********************************************************************//
 	//**                          MEMBERS VARS	                          **//

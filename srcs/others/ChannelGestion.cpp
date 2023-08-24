@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 17:28:50 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/24 01:56:06 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,10 +402,10 @@ void		ChannelGestion::SetNewChannel(std::string channelName, std::string topic, 
 	map.second.channelName = channelName;
 	map.second.channelTopic = topic;
 	map.second.maxUsers = 10;
+	map.second.password = password;
 	if (password.size() == 0)
 	{
 		map.second.didHavePassword = true;
-		map.second.password = password;
 	}
 	else
 	{
@@ -414,4 +414,27 @@ void		ChannelGestion::SetNewChannel(std::string channelName, std::string topic, 
 	std::cout << "channelName: " << channelName << " password: " << password << "topic: " << topic << std::endl;
 
 	_channelMap.insert(map);
+}
+
+void		ChannelGestion::DeleteAllClientFromChannel(IrcCore *irc, Logger *log, ircClient *sender, IrcMemory *ircMemory, std::vector<std::string> words, std::string channelName)
+{
+	if (channelName.at(0) == '#')
+	{
+		channelName.erase(0, 1);
+	}
+	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
+	for (;it != _channelMap.end(); it++)
+	{
+		channel_t tmpChannel = it->second;
+		if (tmpChannel.channelName == channelName)
+		{
+			for (s_t i = 0; i < tmpChannel.users.size(); i++)
+			{
+				std::cout << "DEBUG 1 nickname: " << tmpChannel.users.at(i)->nickName << std::endl;
+				PartChannel(irc, log, ircMemory, tmpChannel.users.at(i), words);
+			}
+			irc->_channels.SendReply("388 " + sender->nickName + " #" + channelName + " :Le canal a été supprimé avec succès", log, sender->fd->fd, 1);
+			_channelMap.erase(channelName);
+		}
+	}
 }

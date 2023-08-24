@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:18:13 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/07/27 01:21:43 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/24 00:27:29 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	PartChannel(IrcCore *irc, Logger *log, IrcMemory *ircMemory, ircClient *cli
 			std::vector<std::string> words)
 {
 // DEBUG :	
-//std::cout << "  Word0: " << words[0] <<  "  Word1: " << words[1] << "  Word2: " << words[2] << "  Word[] Size: " << words.size() << std::endl;
+// std::cout << "  Word0: " << words[0] <<  "  Word1: " << words[1] << "  Word2: " << words[2] << "  Word[] Size: " << words.size() << std::endl;
 	// If using part in a channel
 	if (words[1] == ":" || words[1].c_str() == NULL)
 	{
@@ -64,10 +64,10 @@ void	PartChannel(IrcCore *irc, Logger *log, IrcMemory *ircMemory, ircClient *cli
 			return;
 		}
 		channelName = words[2];
-		log->WARNING("PART() channelName1: %s", channelName.c_str());
+		// log->WARNING("PART() channelName1: %s", channelName.c_str());
 		if (channelName.at(0) == '#')
 			channelName.erase(0, 1);
-		log->WARNING("PART() channelName2: %s", channelName.c_str());
+		// log->WARNING("PART() channelName2: %s", channelName.c_str());
 		// if channel don't exist (3 words)
 		if (irc->GetChannelExist(channelName) == false)
 		{
