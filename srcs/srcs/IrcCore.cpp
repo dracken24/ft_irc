@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcCore.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:21:34 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:52:24 by nadesjar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,11 @@ bl8			IrcCore::GetNewlient(int32 place) const
 
 bl8			IrcCore::GetChannelExist(std::string channel) const
 {
+	if (channel.at(0) == '#')
+	{
+		channel.erase(0, 1);
+		// std::cout << " in: " << channel << std::endl;
+	}
 	if (_channels.GetChannel(channel) == "Channel not found")
 	{
 		return false;
