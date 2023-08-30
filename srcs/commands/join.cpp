@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/30 13:21:28 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/08/30 13:26:11 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ std::cout << "word 1: " << splitCMD->GetWords().at(1) << "  Size: " << splitCMD-
 			channels.erase(channels.begin());
 		}
 	}
-	
+	else
+		return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Wrong Password.",
+			&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
 }
 
 //************************************* LIST *************************************//
