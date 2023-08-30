@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/24 01:20:45 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:15:30 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 				if(channelName.at(0) == '#')
 					channelName.erase(channelName.begin());
 				irc->_channels.SetChannelPassword(channelName, NewPass);
-				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> password has been changed to: " + splitCMD->GetWords().at(3), 
+				irc->_channels.SendReply("001 " + splitCMD->GetChannelName() + "Log: <" + channelName + "> password has been removed", 
 				&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
 			}
 			else
-				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Syntax Error use this syntax: /mode -l <MaxUsersNb>",
+				return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Syntax Error use this syntax: /mode -k <Password>",
 					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));	
 		}
 	//Donner/retirer le privilège de l’opérateur de canal

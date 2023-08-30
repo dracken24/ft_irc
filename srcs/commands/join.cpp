@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/24 00:16:34 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/30 13:21:28 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/IrcCore.hpp"
+#include <cstddef>
 
 //************************************* JOIN *************************************//
 
@@ -60,6 +61,7 @@ std::cout << "Logged: " << irc->_channels.GetSpecificChannel(channelName).nbrMem
 void	JoinChannel(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 {
 	std::string channelName = splitCMD->GetChannelName();
+	int32		securityflag = 0;
 	splitCMD->_logger.TRACE("Join: %s size: %d", channelName.c_str(), channelName.size());
 	if (channelName.size() < 2 || splitCMD->GetWords().at(1) == "#") // Need a channel name after /join
 	{
@@ -68,45 +70,56 @@ void	JoinChannel(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 			+ splitCMD->GetSender()->nickName + "@localHost.com", &splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
 		return;
 	}
-	
-	// splitCMD->_logger.WARNING("JoinChannel() name: %s", channelName.c_str());
-
-	std::vector<int32> hTags;
-	s_t i = 0;
-	for (; i < channelName.size(); i++)
+std::cout << "word 1: " << splitCMD->GetWords().at(1) << "  Size: " << splitCMD->GetWords().size() << "  PASS: " << irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) <<  std::endl;
+	if(splitCMD->GetWords().size() == 3 && irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) != "")
 	{
-		if (channelName.at(i) == '#' || channelName.at(i) == ',')
+		if(splitCMD->GetWords().at(2) != irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)))
+			return(irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Error: Wrong Password.",
+					&splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
+		
+	}
+	if(splitCMD->GetWords().size() == 3 && irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) == splitCMD->GetWords().at(2))
+		securityflag = 1;
+	if (irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) == "" || securityflag == 1)
+	{
+		// splitCMD->_logger.WARNING("JoinChannel() name: %s", channelName.c_str());
+	
+		std::vector<int32> hTags;
+		s_t i = 0;                                                                                                                                                                  
+		for (; i < channelName.size(); i++)
 		{
-			if (channelName.at(i) == '#' && channelName.at(i + 1) == '#')
+			if (channelName.at(i) == '#' || channelName.at(i) == ',')
 			{
-				continue;
+				if (channelName.at(i) == '#' && channelName.at(i + 1) == '#')
+				{
+					continue;
+				}
+				hTags.push_back(i);
+				splitCMD->_logger.INFO("i: %d", i);
 			}
-			hTags.push_back(i);
-			splitCMD->_logger.INFO("i: %d", i);
+		}
+		hTags.push_back(i);
+		splitCMD->_logger.INFO("i: %d", i);
+	
+		std::vector<std::string> channels;
+		for (; hTags.size() > 0;)
+		{
+			std::string tmpNames = channelName;
+			tmpNames = tmpNames.erase(hTags[1]);
+			tmpNames = tmpNames.erase(0, hTags[0]);
+	
+			channels.push_back(tmpNames);
+			// splitCMD->_logger.INFO("tmpNames: %s", tmpNames.c_str());
+			hTags.erase(hTags.begin());
+			hTags.erase(hTags.begin());
+		}
+		for (;channels.size() > 0;)
+		{
+			CheckIfChannelExist(irc, &splitCMD->_logger, channels.at(0), splitCMD->GetSender());
+			// splitCMD->_logger.INFO("channelName: %s", channelName.c_str());
+			channels.erase(channels.begin());
 		}
 	}
-	hTags.push_back(i);
-	splitCMD->_logger.INFO("i: %d", i);
-
-	std::vector<std::string> channels;
-	for (; hTags.size() > 0;)
-	{
-		std::string tmpNames = channelName;
-		tmpNames = tmpNames.erase(hTags[1]);
-		tmpNames = tmpNames.erase(0, hTags[0]);
-
-		channels.push_back(tmpNames);
-		// splitCMD->_logger.INFO("tmpNames: %s", tmpNames.c_str());
-		hTags.erase(hTags.begin());
-		hTags.erase(hTags.begin());
-	}
-	for (;channels.size() > 0;)
-	{
-		CheckIfChannelExist(irc, &splitCMD->_logger, channels.at(0), splitCMD->GetSender());
-		// splitCMD->_logger.INFO("channelName: %s", channelName.c_str());
-		channels.erase(channels.begin());
-	}
-
 	
 }
 
