@@ -6,12 +6,11 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:27:48 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/09/04 15:32:17 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:11:13 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Splinter.hpp"
-# include "../../C_tools/C_tool.h"
 # include "../includes/defines.hpp"
 
 #include <sstream>
@@ -30,7 +29,6 @@ _targetClients(clients)
 	_logger.DEBUG("Buffer in Splinter: %s", buffer.c_str());
 	char *str = (char *)malloc(sizeof(char) * 4096);
 	str = (char *)buffer.c_str();
-	Ct_mprintf(str, std::strlen(str), 1, 'S');
 	// *** //
 
 	SplitCMD();

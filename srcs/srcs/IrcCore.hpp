@@ -6,14 +6,12 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 15:12:35 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:10:50 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRCCORE_HPP
 # define IRCCORE_HPP
-
-# include "../../C_tools/C_tool.h"
 
 # include "../others/Logger.hpp"
 # include "../others/Splinter.hpp"
