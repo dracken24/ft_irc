@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:30:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/16 15:13:41 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:03:21 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,6 @@ void	ChooseCommand(IrcCore *irc, Logger *log, IrcMemory *ircMemory,
 		// Default
 		else
 		{
-//debug:
-			std::cout << "ENTER HERE" << std::endl;
 			irc->_channels.SendReply("PRIVMSG " + splitCMD.GetSender()->userName + " :" + buffer, log, splitCMD.GetSender()->fd->fd, 0);
 		}
 	}

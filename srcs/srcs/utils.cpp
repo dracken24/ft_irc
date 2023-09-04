@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 12:08:06 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:16:18 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:03:57 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,6 @@ void	Ftoa(float nbr, char *destination, int afterpoint)
 		IntToStr((int)floating, destination + i + 1, afterpoint);
 	}
 }
-
-// int main ()
-// {
-// 	char str[20];
-// 	Ftoa(19.445, str, 3);
-	
-// 	std::cout << str << std::endl;
-
-// 	return 0;
-// }
 
 // ******************************** Is...() ********************************* //
 
