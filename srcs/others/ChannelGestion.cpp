@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:36 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/24 01:56:06 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/30 12:51:39 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ void		ChannelGestion::SetChannel(std::string channel)
 	_channelMap.insert(map);
 }
 
-void		ChannelGestion::SetChannelPassword(std::string channel, std::string pass)
+void		ChannelGestion::SetChannelPassword(std::string name, std::string pass)
 {
-	std::pair<std::string, struct channel_t > map;
-	map.first = channel;
-	map.second.password = pass;
+	channel_t channel = GetSpecificChannel(name);
+	channel.password = pass;
 
-	_channelMap.insert(map);
+	_channelMap.at(name) = channel;
 }
 
 void		ChannelGestion::SetTopic(std::string name, std::string topic)
@@ -290,6 +289,8 @@ bl8			ChannelGestion::GetChannelRight(std::string channelName)
 
 std::string ChannelGestion::GetChannelPassword(std::string channelName)
 {
+	if(channelName.at(0) == '#')
+		channelName.erase(0, 1);
 	std::map<std::string, struct channel_t >::const_iterator it = _channelMap.begin();
 	for (; it != _channelMap.end(); it++)
 	{
@@ -298,7 +299,7 @@ std::string ChannelGestion::GetChannelPassword(std::string channelName)
 			return it->second.password;
 		}
 	}
-	return "No password found";
+	return "";
 }
 
 //**********************************************************************//

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelGestion.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 23:52:18 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:27:31 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ class ChannelGestion
 		bl8			RemoveClientToChannel(Logger *log, ircClient *client,
 						std::string channel);
 		void		SetChannel(std::string channel);
-		void		SetChannelPassword(std::string channel, std::string pass);
+		void		SetChannelPassword(std::string name, std::string pass);
 		void		SetTopic(std::string name, std::string topic);
 		void		SetTopicRight(std::string name, bl8 right);
 		void		SetMaxUser(std::string name, uint16 UsersMax);
