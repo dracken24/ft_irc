@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/09/04 14:01:08 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:25:56 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, irc
 		return;
 	}
 
-	if (irc->_channels.GetChannelRight(channelName) == true)
-	{
-		// if (irc->_channels.GetChannelPassword(channelName) != client.)
-		// {
-			
-		// }
-	}
+//	if (irc->_channels.GetChannelRight(channelName) == true)
+//	{
+//		// if (irc->_channels.GetChannelPassword(channelName) != client.)
+//		// {
+//			
+//		// }
+//	}
 	
 	// Check if the client is already in the channel
 	if (irc->_channels.AllreadyInThatChannel(channelName, client->fd->fd) == true)
@@ -42,8 +42,6 @@ void	CheckIfChannelExist(IrcCore *irc, Logger *log, std::string channelName, irc
 	}
 	else // Add client to channel
 	{
-//DEBUG:
-//std::cout << "Logged: " << irc->_channels.GetSpecificChannel(channelName).nbrMembers << "  Max: " << irc->GetSpecificChannel(channelName).maxUsers << std::endl;
 		if (irc->_channels.GetSpecificChannel(channelName).nbrMembers >= irc->GetSpecificChannel(channelName).maxUsers)
 			return(irc->_channels.SendReply("403 , channel #" + channelName + " is full", log, client->fd->fd, 1));
 		else if (irc->_channels.AddClientToChannel(irc, log, client, channelName, false, 0) == true)
@@ -71,8 +69,6 @@ void	JoinChannel(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 			+ splitCMD->GetSender()->nickName + "@localHost.com", &splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
 		return;
 	}
-//DEBUG:
-//std::cout << "word 1: " << splitCMD->GetWords().at(1) << "  Size: " << splitCMD->GetWords().size() << "  PASS: " << irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) <<  std::endl;
 	if(splitCMD->GetWords().size() == 3 && irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) != "")
 	{
 		if(splitCMD->GetWords().at(2) != irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)))
@@ -84,8 +80,6 @@ void	JoinChannel(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 		securityflag = 1;
 	if (irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) == "" || securityflag == 1)
 	{
-		// splitCMD->_logger.WARNING("JoinChannel() name: %s", channelName.c_str());
-	
 		std::vector<int32> hTags;
 		s_t i = 0;                                                                                                                                                                  
 		for (; i < channelName.size(); i++)

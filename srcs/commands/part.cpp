@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:18:13 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/24 00:27:29 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:50 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 void	PartChannel(IrcCore *irc, Logger *log, IrcMemory *ircMemory, ircClient *client,
 			std::vector<std::string> words)
 {
-// DEBUG :	
-// std::cout << "  Word0: " << words[0] <<  "  Word1: " << words[1] << "  Word2: " << words[2] << "  Word[] Size: " << words.size() << std::endl;
 	// If using part in a channel
 	if (words[1] == ":" || words[1].c_str() == NULL)
 	{

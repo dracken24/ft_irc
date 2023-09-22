@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:26:11 by dracken24         #+#    #+#             */
-/*   Updated: 2023/09/04 14:02:06 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:59 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void    PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 		log->ERROR("private targetfd: %d", targetfd);
 		std::string targetMessage = "PRIVMSG " + senderClient->userName + " :" + senderClient->userName + " : " + message;
 		std::string VoidMessage = "PRIVMSG " + channelName + " :" + message;
-//debug:
-//std::cout << "target fd : " << targetfd << " :: " << irc->GetClient(irc->GetClientNb(channelName)).userName << " ::  Sender : " << senderClient->userName << std::endl;
 		irc->_channels.SendReply(targetMessage, log, targetfd, 0);
 	}
 }

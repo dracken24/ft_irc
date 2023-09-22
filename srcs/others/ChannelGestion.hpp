@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:43:47 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/30 11:27:31 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:28:17 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,6 @@
 # include <map>
 # include <set>
 # include <poll.h>
-
-// typedef struct ircClient
-// {
-// 	bl8				admit;
-// 	bl8				emptyFd;
-// 	bl8				setUser;
-
-// 	std::string		userName;
-// 	std::string		nickName;
-// 	std::string		password;
-// 	std::string		channel;
-
-// 	pollfd			*fd;
-// }	ircClient;
-
-
-// typedef struct channel_t
-// {
-// 	uint16 nbrMembers;
-// 	std::string	channelName;
-// 	std::string channelDescription;
-// 	std::vector<ircClient *>	users;
-// }	channel_t;
 
 class ChannelGestion
 {

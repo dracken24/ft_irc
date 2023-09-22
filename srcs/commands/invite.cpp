@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:43:10 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/14 12:39:11 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:25:05 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	InviteUser(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 	std::string Guest = splitCMD->GetWords().at(1);
 	std::string channelName = splitCMD->GetWords().at(2);
 	int32 targetfd = irc->GetClientFd(Guest);
-// DEBUG:
-//std::cout << T_RED" * GUEST FD :: "<< targetfd << "  Word0: " << splitCMD->GetWords().at(0) <<  "  Word1: " << splitCMD->GetWords().at(1) << "  Word2: " << splitCMD->GetWords().at(2) << std::endl;
-//std::cout << "Channel Name: " << channelName << " Target FD: " << targetfd << "  GUEST : " << Guest << std::endl;
 	splitCMD->_logger.TRACE("Invite: %s size: %d", channelName.c_str(), channelName.size());
 	CheckIfChannelExist(irc, &splitCMD->_logger, channelName, &irc->GetClient(irc->GetClientNb(Guest)));
 }
