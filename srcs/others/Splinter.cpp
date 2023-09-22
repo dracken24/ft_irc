@@ -6,12 +6,11 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:27:48 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/08/23 15:13:29 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:11:13 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Splinter.hpp"
-# include "../../C_tools/C_tool.h"
 # include "../includes/defines.hpp"
 
 #include <sstream>
@@ -30,7 +29,6 @@ _targetClients(clients)
 	_logger.DEBUG("Buffer in Splinter: %s", buffer.c_str());
 	char *str = (char *)malloc(sizeof(char) * 4096);
 	str = (char *)buffer.c_str();
-	Ct_mprintf(str, std::strlen(str), 1, 'S');
 	// *** //
 
 	SplitCMD();
@@ -102,6 +100,13 @@ std::cout << "_words Nb -> " << _words.size() << std::endl;
 
 		RemoveSenderInClients(_sender, &_targetClients);
 	}
+	else if (_words[0] == QUIT)
+	{
+		_logger.ERROR("Commande PART: %s", _words[0].c_str());
+		_cmd = QUIT;
+		_isPrivate = false;
+		_isChannel = false;
+	}
 	else if (_words[0] == LIST)
 	{
 		_logger.ERROR("Commande List: %s", _words[0].c_str());
@@ -149,7 +154,7 @@ std::cout << "_words Nb -> " << _words.size() << std::endl;
 	}
 	else if (_words[0] == MODE)
 	{
-		if(_words.size() > 2  && _words[2] == "-i")
+		if(_words.size() > 3  && _words[2] == "-i")
 		{
 			_channelName = _words[3];
 			if(_channelName.at(0) != '#')

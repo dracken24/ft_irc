@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 12:08:06 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/23 13:16:18 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:08:34 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,6 @@ void	Ftoa(float nbr, char *destination, int afterpoint)
 	}
 }
 
-// int main ()
-// {
-// 	char str[20];
-// 	Ftoa(19.445, str, 3);
-	
-// 	std::cout << str << std::endl;
-
-// 	return 0;
-// }
-
 // ******************************** Is...() ********************************* //
 
 bool	IsDigit(std::string str)
@@ -154,93 +144,4 @@ std::string Itoa(int value)
     std::ostringstream out;
     out << value;
     return out.str();
-}
-
-void Ct_mprintf(void *ptr, size_t size, int type, int name)
-{
-	size_t i;
-
-	i = 0;
-	printf("[%c]", name);
-	if (type == 0)
-	{
-		while (i < size)
-			printf("%12d | ", ((char *)ptr)[i++]);
-	}
-	else if (type == 1)
-	{
-		while (i < size)
-		{
-			if (((char *)ptr)[i] > 31 && ((char *)ptr)[i] < 127)
-				printf("%3c | ", ((char *)ptr)[i]);
-			else if (((char *)ptr)[i] == 0)
-				printf(" \\0 | ");
-			else if (((char *)ptr)[i] == 1)
-				printf("SHO | ");
-			else if (((char *)ptr)[i] == 2)
-				printf("STX | ");
-			else if (((char *)ptr)[i] == 3)
-				printf("ETX | ");
-			else if (((char *)ptr)[i] == 4)
-				printf("EOT | ");
-			else if (((char *)ptr)[i] == 5)
-				printf("ENQ | ");
-			else if (((char *)ptr)[i] == 6)
-				printf("ACK | ");
-			else if (((char *)ptr)[i] == 7)
-				printf(" \\a | ");
-			else if (((char *)ptr)[i] == 8)
-				printf(" \\b | ");
-			else if (((char *)ptr)[i] == 9)
-				printf(" \\t | ");
-			else if (((char *)ptr)[i] == 10)
-				printf(" \\n | ");
-			else if (((char *)ptr)[i] == 11)
-				printf(" \\v | ");
-			else if (((char *)ptr)[i] == 12)
-				printf(" \\f | ");
-			else if (((char *)ptr)[i] == 13)
-				printf(" \\r | ");
-			else if (((char *)ptr)[i] == 14)
-				printf(" SO | ");
-			else if (((char *)ptr)[i] == 15)
-				printf(" SI | ");
-			else if (((char *)ptr)[i] == 16)
-				printf("DLE | ");
-			else if (((char *)ptr)[i] == 17)
-				printf("DC1 | ");
-			else if (((char *)ptr)[i] == 18)
-				printf("DC2 | ");
-			else if (((char *)ptr)[i] == 19)
-				printf("DC3 | ");
-			else if (((char *)ptr)[i] == 20)
-				printf("DC4 | ");
-			else if (((char *)ptr)[i] == 21)
-				printf("NAK | ");
-			else if (((char *)ptr)[i] == 22)
-				printf("SYN | ");
-			else if (((char *)ptr)[i] == 23)
-				printf("ETB | ");
-			else if (((char *)ptr)[i] == 24)
-				printf("CAN | ");
-			else if (((char *)ptr)[i] == 25)
-				printf(" EM | ");
-			else if (((char *)ptr)[i] == 26)
-				printf("SUB | ");
-			else if (((char *)ptr)[i] == 27)
-				printf("ESC | ");
-			else if (((char *)ptr)[i] == 28)
-				printf(" FS | ");
-			else if (((char *)ptr)[i] == 29)
-				printf(" GS | ");
-			else if (((char *)ptr)[i] == 30)
-				printf(" RS | ");
-			else if (((char *)ptr)[i] == 31)
-				printf(" US | ");
-			else
-				printf("%3d | ", ((char *)ptr)[i]);
-			i++;
-		}
-	}
-	printf("\n");
 }

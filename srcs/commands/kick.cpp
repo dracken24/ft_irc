@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:18:13 by nadesjar          #+#    #+#             */
-/*   Updated: 2023/07/26 21:10:36 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:11 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	KickUser(IrcCore *irc, Logger *log, IrcMemory *ircMemory, ircClient *client
 			std::vector<std::string> words)
 {
 	int32 targetfd = irc->GetClientFd(words[2]);
-//Debug 	
-//	std::cout << "* USER FD :: "<< targetfd << "  Word0: " << words[0] <<  "  Word1: " << words[1] << "  Word2: " << words[2] << "  Word3: " << words[3] << std::endl;
 	log->WARNING("KICK(): %s", words.at(1).c_str());
 
 	if (words.size() == 1)

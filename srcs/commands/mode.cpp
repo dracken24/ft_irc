@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:42:43 by smayrand          #+#    #+#             */
-/*   Updated: 2023/08/30 11:15:30 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:35 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter *splitCMD, int32 i)
 {
-//debug:
-//std::cout << "WORD0 : " << splitCMD->GetWords().at(0) <<"  WORD1 : " << splitCMD->GetWords().at(3) << "  I: " << i << std::endl;
- //"  WORD1 : " << splitCMD->GetWords().at(1) << "  WORD2 : " << splitCMD->GetWords().at(2) <<
 	if(splitCMD->GetWords().size() >= 2)
 	{
 			std::cout << "Mode " ;
@@ -187,6 +184,5 @@ void	Mode(IrcCore *irc, Logger *log, IrcMemory *ircMemory, pollfd *fds, Splinter
 	else
 	{
 		std::cout << "Error: Need a function " << std::endl;
-//		irc->_channels.SendReply("403 :Syntax Error", log,   client->fd->fd, 1);
 	}
 }

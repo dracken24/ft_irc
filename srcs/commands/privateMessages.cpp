@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privateMessages.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadesjar <nadesjar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:26:11 by dracken24         #+#    #+#             */
-/*   Updated: 2023/08/24 01:50:53 by nadesjar         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:59 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void    PrivmsgGestion(IrcCore *irc, Logger *log, ircClient *senderClient,
 		log->ERROR("private targetfd: %d", targetfd);
 		std::string targetMessage = "PRIVMSG " + senderClient->userName + " :" + senderClient->userName + " : " + message;
 		std::string VoidMessage = "PRIVMSG " + channelName + " :" + message;
-//debug:
-std::cout << "target fd : " << targetfd << " :: " << irc->GetClient(irc->GetClientNb(channelName)).userName << " ::  Sender : " << senderClient->userName << std::endl;
 		irc->_channels.SendReply(targetMessage, log, targetfd, 0);
-//		irc->_channels.SendReply(VoidMessage, log, senderClient->fd->fd, 0);
-//		irc->_channels.SendPrivateReply(targetMessage, log, targetfd, senderClient->userName);
-//		irc->_channels.AddClientToChannel(irc, log, &irc->GetClient(irc->GetClientNb(channelName)), senderClient->userName , false, 1);
 	}
 }
