@@ -6,7 +6,7 @@
 /*   By: smayrand <smayrand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 08:53:37 by dracken24         #+#    #+#             */
-/*   Updated: 2023/09/22 13:25:56 by smayrand         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:06:11 by smayrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	JoinChannel(IrcCore *irc, IrcMemory *ircMemory, Splinter *splitCMD)
 			+ splitCMD->GetSender()->nickName + "@localHost.com", &splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1);
 		return;
 	}
+	if (splitCMD->GetWords().at(1).at(0) != '#')
+		return (irc->_channels.SendReply("403 " + splitCMD->GetSender()->nickName + " Channel does not exist. "
+			+ splitCMD->GetSender()->nickName + "@localHost.com", &splitCMD->_logger, splitCMD->GetSender()->fd->fd, 1));
 	if(splitCMD->GetWords().size() == 3 && irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)) != "")
 	{
 		if(splitCMD->GetWords().at(2) != irc->_channels.GetChannelPassword(splitCMD->GetWords().at(1)))
